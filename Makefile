@@ -1,6 +1,6 @@
 
 
-default: build
+default: build-nbconvert
 
 NBNAME=dicts_and_dataframes
 IPYNB=${NBNAME}.ipynb
