@@ -154,7 +154,7 @@ with pytest.raises(TypeError): # 'dict_items' object is not subscriptable
 # obj.keys[3] => obj._array[3]
 # ```
 #
-# - This would be backward incompatible because `dict.keys()` is a method and not a property.
+# - This would (edit: not) be backward incompatible; though everyone is used to `dict.keys()` being a method and not a property, so it would look weird in reviews for awhile (and visually-indiscernable)
 #   To not break all existing code, it would have to be:
 #   ```python
 #   obj = dict.fromkeys('abcd')
@@ -394,7 +394,7 @@ assert list(df.iloc[0].index) == list(df.columns) == list('abcd')
 assert list(df.iloc[0]) == list(df.loc[0])
 assert list(df.loc[0].index) == list(df.columns) == list('abcd')
 assert list(df.loc[0]) == list('ABCD')
-assert df.iloc[0]['a'] == 'A' == df.loc[0]['a']
+assert df.iloc[0]['a'] == 'A' == df.loc[0]['a'] == df.iloc[0, 0] == df.loc[0, 'a']
 
 df = pd.DataFrame.from_records(list(odict.items()))
 display(df)
@@ -412,17 +412,17 @@ df = pd.DataFrame.from_dict(odict.items())
 display(df)
 assert list(df.index) == [0, 1, 2, 3]
 assert list(df.columns) == [0, 1]
-assert df[0][0] == 'a' == df.iloc[0].iloc[0]
+assert df[0][0] == 'a' == df.iloc[0].iloc[0] == df.iloc[0, 0]
 
 df = pd.DataFrame.from_dict(odict, orient='index')
 display(df)
 assert list(df.index) == list('abcd')
 assert list(df.columns) == [0]
-assert df.loc['a'][0] == 'A' == df.iloc[0][0]
+assert df.loc['a'][0] == 'A' == df.iloc[0][0] == df.iloc[0, 0]
 
 df.columns = ['letter']
 display(df)
-assert df.loc['a']['letter'] == 'A' == df.iloc[0][0] == df.loc['a'].iloc[0] == df.iloc[0].loc['letter']
+assert df.loc['a']['letter'] == 'A' == df.iloc[0][0] == df.loc['a'].iloc[0] == df.iloc[0].loc['letter'] == df.iloc[0, 0]
 
 df.index = ['red', 'green', 'blue', 'orange']
 display(df)
