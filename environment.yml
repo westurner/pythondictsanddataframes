@@ -1,0 +1,12 @@
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - pip
+
+  - jupyterlab
+  - nodejs
+  - jupytext
+
+  - pytest-cov
+  - pandas
