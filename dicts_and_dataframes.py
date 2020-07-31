@@ -45,6 +45,7 @@ try:
     display  # IPython
 except NameError:
     def display(*args): print(args)
+pd.set_option('display.notebook_repr_html', False)
 
 # ### CPython dict basics
 
